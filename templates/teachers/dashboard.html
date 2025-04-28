@@ -1,0 +1,71 @@
+{% extends "home/base.html" %}
+
+{% block content %}
+
+<h1>Assignments Given by You</h1>
+
+<div class="container mt-4">
+    
+    <!-- Teacher's Information Section -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4>Your Profile</h4>
+        </div>
+        <div class="card-body">
+            <p><strong>Name:</strong> {{ teacher.user.first_name }} {{ teacher.user.last_name }}</p>
+            <p><strong>Department:</strong> {{ teacher.department }}</p>
+            <p><strong>Date Joined:</strong> {{ teacher.date_joined }}</p>
+        </div>
+    </div>
+
+    <!-- Assignments List Section -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4>Your Assignments</h4>
+        </div>
+        <div class="card-body">
+            {% if assignments %}
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Assignment Title</th>
+                            <th>Description</th>
+                            <th>Assigned Date</th>
+                            <th>Due Date</th>
+                            <th>Status</th>
+                            <th>Completed Students</th>
+                            <th>Total Students</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in assignment_status %}
+                            <tr>
+                                <td>{{ item.assignment.title }}</td>
+                                <td>{{ item.assignment.description|slice:":100" }}</td>
+                                <td>{{ item.assignment.assigned_date|date:"M d, Y" }}</td>
+                                <td>{{ item.assignment.due_date|date:"M d, Y" }}</td>
+
+                                <!-- Display status with custom styling -->
+                                <td>
+                                    {% if item.status == 'Completed' %}
+                                        <span class=" text-white font-weight-bold bg-dark  rounded p-1">Completed</span>
+                                    {% else %}
+                                        <span class="text-white font-weight-bold bg-dark rounded p-1">Pending</span>
+                                    {% endif %}
+                                </td>
+
+                                <td>{{ item.completed_students }}</td>
+                                <td>{{ item.total_students }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>No assignments have been created yet.</p>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+
+{% endblock content %}

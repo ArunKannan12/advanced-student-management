@@ -1,0 +1,58 @@
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.student-details-table {
+    width: 100%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    max-width: 800px;
+}
+
+.student-details-table th, .student-details-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.student-details-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.student-details-table td {
+    background-color: #fff;
+}
+
+.action-links {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.btn {
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.edit-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.edit-btn:hover {
+    background-color: #45a049;
+}
+
+.delete-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #e53935;
+}

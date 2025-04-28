@@ -1,0 +1,26 @@
+{% extends "home/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">{{ assignment.title }}</h1>
+
+    <p>{{ assignment.description }}</p>
+    <p><strong>Due Date:</strong> {{ assignment.due_date }}</p>
+    <p><strong>Assigned by:</strong> {{ assignment.teacher.user.first_name }} {{ assignment.teacher.user.last_name }}</p>
+
+    {% if student_assignment.is_completed %}
+        <p><strong>Status:</strong> Completed on {{ student_assignment.submitted_at }}</p>
+        <a href="{{ student_assignment.submitted_file.url }}" class="btn btn-success" target="_blank">View Submission</a>
+
+    {% else %}
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="submission_file" class="form-label">Submit your work:</label>
+                <input type="file" name="submission_file" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Assignment</button>
+        </form>
+    {% endif %}
+</div>
+{% endblock %}

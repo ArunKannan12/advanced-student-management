@@ -1,0 +1,18 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Assignment Details</h2>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ assignment.title }}</h5>
+            <p class="card-text">{{ assignment.description }}</p>
+            <p class="card-text"><strong>Due Date:</strong> {{ assignment.assigned_date }}</p>
+            <p class="card-text"><strong>Due Date:</strong> {{ assignment.due_date }}</p>
+            <p class="card-text"><strong>Assigned By:</strong> {{ assignment.teacher.user.email }}</p>
+            
+        </div>
+    </div>
+    <a href="{% url 'teacher_assignments' %}" class="btn btn-secondary mt-3">Back to Assignments</a>
+</div>
+{% endblock content %}

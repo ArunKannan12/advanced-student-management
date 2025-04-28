@@ -1,0 +1,137 @@
+{% extends "home/base.html" %}
+
+{% block content %}
+    <h1>{% if form.instance.pk %}Edit{% else %}Add{% endif %} Student</h1>
+    
+    <form method="POST" class="student-form">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="{{ form.user.id_for_label }}">Student User</label>
+            {{ form.user }}
+            {% if form.user.errors %}
+                <div class="errors">
+                    {% for error in form.user.errors %}
+                        <p class="error">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.roll_no.id_for_label }}">Roll Number</label>
+            {{ form.roll_no }}
+            {% if form.roll_no.errors %}
+                <div class="errors">
+                    {% for error in form.roll_no.errors %}
+                        <p class="error">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.class_name.id_for_label }}">Class Name</label>
+            {{ form.class_name }}
+            {% if form.class_name.errors %}
+                <div class="errors">
+                    {% for error in form.class_name.errors %}
+                        <p class="error">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.parent_name.id_for_label }}">Parent Name</label>
+            {{ form.parent_name }}
+            {% if form.parent_name.errors %}
+                <div class="errors">
+                    {% for error in form.parent_name.errors %}
+                        <p class="error">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+
+    <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+
+{% endblock content %}
+
+{% block styles %}
+    <style>
+        .student-form {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .errors {
+            color: red;
+            font-size: 12px;
+        }
+
+        .error {
+            margin: 5px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 10px;
+        }
+    </style>
+{% endblock %}

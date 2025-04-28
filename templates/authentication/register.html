@@ -1,0 +1,97 @@
+{% extends "home/base.html" %}
+
+{% block title %}Register - Student Management{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h2 class="text-center mb-4">Register</h2>
+
+        <!-- Display success or error messages -->
+        {% if messages %}
+            <div class="alert alert-info">
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            
+            <!-- Email Field -->
+            <div class="form-group mb-3">
+                <label for="{{ form.email.id_for_label }}">Email</label>
+                <input type="email" name="{{ form.email.name }}" class="form-control" id="{{ form.email.id_for_label }}" value="{{ form.email.value|default:'' }}">
+                {% if form.email.errors %}
+                    <div class="invalid-feedback d-block">
+                        {% for error in form.email.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- First Name Field -->
+            <div class="form-group mb-3">
+                <label for="{{ form.first_name.id_for_label }}">First Name</label>
+                <input type="text" name="{{ form.first_name.name }}" class="form-control" id="{{ form.first_name.id_for_label }}" value="{{ form.first_name.value|default:'' }}">
+                {% if form.first_name.errors %}
+                    <div class="invalid-feedback d-block">
+                        {% for error in form.first_name.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Last Name Field -->
+            <div class="form-group mb-3">
+                <label for="{{ form.last_name.id_for_label }}">Last Name</label>
+                <input type="text" name="{{ form.last_name.name }}" class="form-control" id="{{ form.last_name.id_for_label }}" value="{{ form.last_name.value|default:'' }}">
+                {% if form.last_name.errors %}
+                    <div class="invalid-feedback d-block">
+                        {% for error in form.last_name.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Password Field -->
+            <div class="form-group mb-3">
+                <label for="{{ form.password1.id_for_label }}">Password</label>
+                <input type="password" name="{{ form.password1.name }}" class="form-control" id="{{ form.password1.id_for_label }}">
+                {% if form.password1.errors %}
+                    <div class="invalid-feedback d-block">
+                        {% for error in form.password1.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Confirm Password Field -->
+            <div class="form-group mb-3">
+                <label for="{{ form.password2.id_for_label }}">Confirm Password</label>
+                <input type="password" name="{{ form.password2.name }}" class="form-control" id="{{ form.password2.id_for_label }}">
+                {% if form.password2.errors %}
+                    <div class="invalid-feedback d-block">
+                        {% for error in form.password2.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Register</button>
+        </form>
+
+        <div class="text-center mt-3">
+            <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

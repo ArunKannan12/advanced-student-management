@@ -1,0 +1,22 @@
+{% extends "home/base.html" %}
+{% block content %}
+<h1>Attendance for {{ today }}</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in attendance_records %}
+            <tr>
+                <td>{{ record.student.user.first_name }} {{ record.student.user.last_name }}</td>
+                <td>{{ record.get_status_display }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock content %}

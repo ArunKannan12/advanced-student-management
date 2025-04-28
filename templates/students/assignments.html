@@ -1,0 +1,18 @@
+{% extends "home/base.html" %}
+{% block content %}
+
+<h1>Your Assignments</h1>
+    <ul>
+        {% for assignment in assignments %}
+            <li>
+                <strong>{{ assignment.title }}</strong><br>
+                Description: {{ assignment.description }}<br>
+                Due Date: {{ assignment.due_date }}<br>
+                Assigned by: {{ assignment.teacher.user.get_full_name }}
+            </li>
+        {% empty %}
+            <li>You don't have any assignments yet.</li>
+        {% endfor %}
+    </ul>
+
+{% endblock content %}

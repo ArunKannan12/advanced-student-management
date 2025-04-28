@@ -1,0 +1,66 @@
+{% extends "home/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <h2 class="text-center mb-5">📚 Student Submissions</h2>
+
+    <!-- Check if there are any assignments at all -->
+    {% if not completed_submissions and not pending_submissions %}
+        <div class="alert alert-warning" role="alert">
+            No assignments available.
+        </div>
+    {% else %}
+
+        <!-- Completed Submissions -->
+        <h4 class="mb-3 text-success">Completed Submissions ✅</h4>
+        {% if completed_submissions %}
+            <div class="row row-cols-1 row-cols-md-2 g-4 mb-5">
+                {% for submission in completed_submissions %}
+                    <div class="col">
+                        <div class="card border-success">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ submission.student.user.first_name }} {{ submission.student.user.last_name }}</h5>
+                                <p class="card-text">
+                                    <strong>Assignment:</strong> {{ submission.assignment.title }}<br>
+                                    <strong>Submitted At:</strong> {{ submission.submitted_at|date:"M d, Y H:i" }}
+                                </p>
+                                <a href="{{ submission.submitted_file.url }}" target="_blank" class="btn btn-success btn-sm">View Submission</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info" role="alert">
+                No completed submissions yet.
+            </div>
+        {% endif %}
+
+        <!-- Pending Submissions -->
+        <h4 class="mb-3 text-danger">Pending Submissions ❌</h4>
+        {% if pending_submissions %}
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                {% for pending in pending_submissions %}
+                    <div class="col">
+                        <div class="card border-danger">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ pending.student.user.first_name }} {{ pending.student.user.last_name }}</h5>
+                                <p class="card-text">
+                                    <strong>Assignment:</strong> {{ pending.assignment.title }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-success" role="alert">
+                All students have completed their submissions! 🎉
+            </div>
+        {% endif %}
+
+    {% endif %}
+
+</div>
+{% endblock %}
