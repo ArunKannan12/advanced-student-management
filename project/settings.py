@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'student',
     'adminpanel',
     'teachers.apps.TeachersConfig',
+    'widget_tweaks',
 
 ]
 

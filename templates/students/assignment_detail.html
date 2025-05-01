@@ -1,6 +1,6 @@
 {% extends "home/base.html" %}
-{% block content %}
 
+{% block content %}
 <div class="container mt-5">
     <div class="card shadow p-4">
         <h1 class="text-center mb-4">{{ assignment.title }}</h1>
@@ -28,6 +28,13 @@
                 </a>
             </div>
 
+            <!-- Button to trigger the modal for deletion -->
+            <div class="text-center mb-4">
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-submission-id="{{ student_assignment.id }}">
+                    Delete Submission
+                </button>
+            </div>
+
             <!-- Bootstrap Modal for Confirmation -->
             <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -41,19 +48,15 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <!-- The form to delete the submission -->
                             <form method="POST" id="deleteForm">
                                 {% csrf_token %}
-                               <!-- Delete Submission Button (Triggers the Modal) -->
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-submission-id="{{ student_assignment.id }}">
-                                    Delete Submission
-                                </button>
-
+                                <button type="submit" class="btn btn-danger">Delete Submission</button>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-
 
         {% else %}
             <div class="card bg-light p-4">
@@ -77,12 +80,14 @@
         {% endif %}
     </div>
 </div>
+
 <script>
     // Listen for the modal's show event
-    var confirmDeleteModal = document.getElementById('confirmDeleteModal')
+    var confirmDeleteModal = document.getElementById('confirmDeleteModal');
     confirmDeleteModal.addEventListener('show.bs.modal', function (event) {
         var button = event.relatedTarget; // Button that triggered the modal
         var submissionId = button.getAttribute('data-submission-id'); // Extract submission ID
+
         if (!submissionId) {
             console.error("No submission ID found!");
             return;
@@ -91,7 +96,7 @@
         var deleteForm = confirmDeleteModal.querySelector('#deleteForm');
         
         // Set the form action to delete the correct submission
-        deleteForm.action = "{% url 'delete_submission' 00 %}".replace('0', submissionId);
+        deleteForm.action = "{% url 'delete_submission' 00 %}".replace('00', submissionId);
     });
 </script>
 

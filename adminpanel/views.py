@@ -15,7 +15,7 @@ def is_admin(user):
 @login_required
 @user_passes_test(is_admin)
 def update_user_role(request, user_id):
-    query = request.GET.get('q')
+    query = request.GET.get('q','').strip()  # Get the query parameter for search
     if query:
         users = CustomUser.objects.filter(
             Q(first_name__icontains=query) |
@@ -31,12 +31,15 @@ def update_user_role(request, user_id):
         form = RoleUpdateForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
-            return redirect('update_user_role',user_id=user_id)
+            return redirect('update_user_role', user_id=user_id)
     else:
         form = RoleUpdateForm()
-    
-    return render(request, 'adminpanel/update_user_role.html', {'form': form, 'users': users, 'query': query})
 
+    return render(request, 'adminpanel/update_user_role.html', {
+        'form': form,
+        'users': users,
+        'query': query,  # Pass the query value to the template
+    })
 
 
 # Helper function to check if user is admin

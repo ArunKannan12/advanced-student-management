@@ -4,6 +4,19 @@
 <div class="container mt-5">
     <h1 class="text-center mb-4">Update Assignment</h1>
     
+    <!-- Feedback message for success or failure -->
+    {% if messages %}
+        <div class="mb-4">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    
+    <!-- Form Section -->
     <form method="POST" class="bg-light p-4 rounded shadow-sm">
         {% csrf_token %}
         
@@ -37,11 +50,11 @@
             {% endif %}
         </div>
         
-       
-
-        <button type="submit" class="btn btn-primary w-100">Update Assignment</button>
+        <button type="submit" class="btn btn-primary w-100">Save Changes</button>
     </form>
 
+    <!-- Back to Assignments Button -->
     <a href="{% url 'assignment_list' %}" class="btn btn-secondary mt-3 d-block w-100">Back to Assignments</a>
 </div>
+
 {% endblock content %}

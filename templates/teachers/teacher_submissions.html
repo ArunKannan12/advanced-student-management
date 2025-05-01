@@ -8,7 +8,7 @@
     <!-- Check if there are any assignments at all -->
     {% if not completed_submissions and not pending_submissions %}
         <div class="alert alert-warning" role="alert">
-            No assignments available.
+            <i class="bi bi-exclamation-triangle-fill"></i> No assignments available.
         </div>
     {% else %}
 
@@ -25,7 +25,7 @@
                                     <strong>Assignment:</strong> {{ submission.assignment.title }}<br>
                                     <strong>Submitted At:</strong> {{ submission.submitted_at|date:"M d, Y H:i" }}
                                 </p>
-                                <a href="{{ submission.submitted_file.url }}" target="_blank" class="btn btn-success btn-sm">View Submission</a>
+                                <a href="{{ submission.submitted_file.url }}" target="_blank" class="btn btn-success btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="View Submission">View Submission</a>
                             </div>
                         </div>
                     </div>
@@ -33,7 +33,7 @@
             </div>
         {% else %}
             <div class="alert alert-info" role="alert">
-                No completed submissions yet.
+                <i class="bi bi-info-circle-fill"></i> No completed submissions yet.
             </div>
         {% endif %}
 
@@ -56,11 +56,20 @@
             </div>
         {% else %}
             <div class="alert alert-success" role="alert">
-                All students have completed their submissions! 🎉
+                <i class="bi bi-check-circle-fill"></i> All students have completed their submissions! 🎉
             </div>
         {% endif %}
 
     {% endif %}
 
 </div>
+
+<script>
+    // Initialize tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+</script>
+
 {% endblock %}

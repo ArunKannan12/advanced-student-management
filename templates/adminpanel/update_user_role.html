@@ -1,46 +1,126 @@
-<!-- adminpanel/manage_user_roles.html -->
 {% extends "home/base.html" %}
+
 {% block content %}
 <div class="container mt-4">
-    <h2 class="mb-4">Manage User Roles</h2>
+    <h2 class="text-center mb-4">Manage User Roles</h2>
+
+    <!-- Back to Dashboard Button -->
+    <div class="text-end mb-3">
+        <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+
+    <!-- Search Form -->
     <form method="get" class="mb-3 d-flex">
         <input type="text" name="q" class="form-control me-2" placeholder="Search by name or email" value="{{ query }}">
         <button type="submit" class="btn btn-outline-primary">Search</button>
     </form>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Full Name</th>
-                <th>Email</th>
-                <th>Current Role</th>
-                <th>Update Role</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for user in users %}
+
+    <!-- Users Table -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
                 <tr>
-                    <td>{{ user.first_name |capfirst}} {{user.last_name | capfirst}}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.role }}</td>
-                    <td>
-                        <form method="post" class="d-flex">
-                            {% csrf_token %}
-                            <input type="hidden" name="user_id" value="{{ user.id }}">
-                            <select name="role" class="form-select me-2">
-                                <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Admin</option>
-                                <option value="teacher" {% if user.role == 'teacher' %}selected{% endif %}>Teacher</option>
-                                <option value="student" {% if user.role == 'student' %}selected{% endif %}>Student</option>
-                            </select>
-                            <button type="submit" class="btn btn-sm btn-primary">Update</button>
-                        </form>
-                    </td>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Current Role</th>
+                    <th>Update Role</th>
                 </tr>
-            {% empty %}
-            <tr>
-                <td colspan="4" class="text-center text-muted">No users found.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.first_name|capfirst }} {{ user.last_name|capfirst }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.role|capfirst }}</td>
+                        <td>
+                            <form method="post" class="d-flex">
+                                {% csrf_token %}
+                                <input type="hidden" name="user_id" value="{{ user.id }}">
+                                <select name="role" class="form-select me-2">
+                                    <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Admin</option>
+                                    <option value="teacher" {% if user.role == 'teacher' %}selected{% endif %}>Teacher</option>
+                                    <option value="student" {% if user.role == 'student' %}selected{% endif %}>Student</option>
+                                </select>
+                                <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center text-muted">No users found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
+
+{% endblock %}
+
+{% block styles %}
+<style>
+    /* General Styling */
+    .table th, .table td {
+        padding: 12px;
+        vertical-align: middle;
+    }
+
+    .table {
+        margin-top: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+    }
+
+    /* Styling for the back button */
+    .btn-secondary {
+        font-size: 14px;
+        padding: 8px 16px;
+        border-radius: 4px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .table th, .table td {
+            padding: 8px;
+        }
+
+        .container {
+            padding: 10px;
+        }
+
+        .btn-outline-primary {
+            font-size: 12px;
+        }
+    }
+
+    /* Styling for the form and select elements */
+    .form-control, .form-select {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .form-select {
+        max-width: 200px;
+    }
+
+    .d-flex button {
+        font-size: 14px;
+    }
+
+    /* Styling the table and buttons */
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+        border-radius: 4px;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-sm {
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+</style>
 {% endblock %}

@@ -83,12 +83,15 @@
             margin-bottom: 5px;
         }
 
-        .form-group input {
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             font-size: 14px;
             border: 1px solid #ddd;
             border-radius: 4px;
+            box-sizing: border-box;
         }
 
         .errors {
@@ -132,6 +135,25 @@
         a {
             display: inline-block;
             margin-top: 10px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .student-form {
+                padding: 15px;
+            }
+
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                padding: 8px;
+                font-size: 14px;
+            }
+
+            .btn {
+                width: 100%;
+                padding: 12px;
+            }
         }
     </style>
 {% endblock %}

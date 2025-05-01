@@ -11,7 +11,7 @@
 
 <!-- Student Table -->
 <div class="table-responsive">
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover table-lg">
         <thead class="table-dark">
             <tr>
                 <th>Full Name</th>
@@ -44,4 +44,74 @@
         </tbody>
     </table>
 </div>
+
+<!-- Back to Dashboard Button -->
+<div class="text-center mt-3">
+    <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+</div>
+
+{% endblock %}
+
+{% block styles %}
+    <style>
+        /* Larger Table */
+        .table th, .table td {
+            padding: 18px;  /* Increased padding for larger table */
+            vertical-align: middle;
+        }
+
+        .table {
+            margin-top: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .table-lg {
+            font-size: 1.2rem;  /* Increased font size for the table */
+        }
+
+        .btn {
+            font-size: 14px;
+            padding: 8px 16px;
+            border-radius: 4px;
+        }
+
+        .btn-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        /* Responsive Design for smaller screens */
+        @media (max-width: 768px) {
+            .table th, .table td {
+                padding: 12px;
+            }
+
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
 {% endblock %}

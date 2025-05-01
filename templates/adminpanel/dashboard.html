@@ -1,18 +1,14 @@
 {% extends "home/base.html" %}
 
 {% block content %}
-
-<!-- Add Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
-
-<div class="container mt-4">
+<div class="container-fluid mt-4">
     <h1 class="text-center text-primary mb-4">Admin Dashboard</h1>
-    
+
     <div class="row">
-        <!-- Left Sidebar -->
-        <div class="col-md-3">
+        <!-- Sidebar Navigation -->
+        <nav class="col-md-3 mb-3">
             <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action active">Dashboard</a>
+                <a href="#" class="list-group-item list-group-item-action active" aria-current="true">Dashboard</a>
                 <a href="{% url 'student_list' %}" class="list-group-item list-group-item-action">Students</a>
                 <a href="{% url 'teacher_list' %}" class="list-group-item list-group-item-action">Teachers</a>
                 <a href="#" class="list-group-item list-group-item-action">Assignments</a>
@@ -20,86 +16,77 @@
                 <a href="#" class="list-group-item list-group-item-action">Reports</a>
                 <a href="#" class="list-group-item list-group-item-action">Settings</a>
             </div>
-        </div>
+        </nav>
 
         <!-- Main Content -->
-        <div class="col-md-9">
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h5>Dashboard Features</h5>
+        <main class="col-md-9">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Dashboard Features</h5>
                 </div>
                 <div class="card-body">
-                    <p>Welcome to the Admin Dashboard. Here you can manage all aspects of the Student Management System.</p>
+                    <p class="lead">Welcome to the Admin Dashboard. Manage the entire Student Management System here.</p>
 
-                    <!-- Student Management Section -->
-                    <h6>1. Student Management</h6>
-                    <ul>
-                        <li><strong>View All Students:</strong> List of all students with options to edit, view details, or delete.</li>
-                        <li><strong>Add New Student:</strong> A form to add new students with their details like roll number, class, and parent name.</li>
-                        <li><strong>Student Reports:</strong> Generate reports for students based on their attendance and grades.</li>
-                    </ul>
+                    <!-- Features List -->
+                    <section>
+                        <h6 class="text-secondary mt-4">1. Student Management</h6>
+                        <ul>
+                            <li><strong>View All Students:</strong> List all students, edit or delete them.</li>
+                            <li><strong>Add New Student:</strong> Add students with details like roll no, class, parent info.</li>
+                            <li><strong>Student Reports:</strong> Generate attendance and grade reports.</li>
+                        </ul>
 
-                    <!-- Teacher Management Section -->
-                    <h6>2. Teacher Management</h6>
-                    <ul>
-                        <li><strong>View All Teachers:</strong> List of all teachers with their details like department, employee ID, and joining date.</li>
-                        <li><strong>Assign Subjects:</strong> Assign subjects or courses to teachers.</li>
-                        <li><strong>Add New Teacher:</strong> A form to add new teachers with their department and employee ID.</li>
-                    </ul>
+                        <h6 class="text-secondary mt-4">2. Teacher Management</h6>
+                        <ul>
+                            <li><strong>View All Teachers:</strong> View details like department, ID, and join date.</li>
+                            <li><strong>Assign Subjects:</strong> Map subjects to teachers easily.</li>
+                            <li><strong>Add New Teacher:</strong> Add new teacher records.</li>
+                        </ul>
 
-                    <!-- Assignment Management Section -->
-                    <h6>3. Assignment Management</h6>
-                    <ul>
-                        <li><strong>View All Assignments:</strong> Manage assignments given to students, including due dates and assigned teachers.</li>
-                        <li><strong>Create Assignment:</strong> Add new assignments with a title, description, and due date.</li>
-                        <li><strong>Assignment Grading:</strong> Enable teachers to grade assignments and track student progress.</li>
-                    </ul>
+                        <h6 class="text-secondary mt-4">3. Assignment Management</h6>
+                        <ul>
+                            <li><strong>View All Assignments:</strong> Manage assignments, due dates, and teachers.</li>
+                            <li><strong>Create Assignment:</strong> Add new assignments easily.</li>
+                            <li><strong>Assignment Grading:</strong> Allow teachers to grade submissions.</li>
+                        </ul>
 
-                    <!-- Attendance Tracking Section -->
-                    <h6>4. Attendance Tracking</h6>
-                    <ul>
-                        <li><strong>Daily Attendance:</strong> Record and manage daily attendance for students.</li>
-                        <li><strong>Attendance Reports:</strong> Generate attendance reports for students over time.</li>
-                        <li><strong>Set Attendance Rules:</strong> Configure rules for absences.</li>
-                    </ul>
+                        <h6 class="text-secondary mt-4">4. Attendance Tracking</h6>
+                        <ul>
+                            <li><strong>Daily Attendance:</strong> Record student attendance every day.</li>
+                            <li><strong>Attendance Reports:</strong> See detailed attendance analytics.</li>
+                            <li><strong>Set Attendance Rules:</strong> Define absence handling policies.</li>
+                        </ul>
 
-                    <!-- Student-Teacher Interaction Section -->
-                    <h6>5. Student-Teacher Interaction</h6>
-                    <ul>
-                        <li><strong>Teacher Assignments:</strong> View and manage assignments for each teacher.</li>
-                        <li><strong>Feedback Management:</strong> Allow feedback exchange between students and teachers.</li>
-                        <li><strong>Parent Communication:</strong> Communicate with parents about student performance.</li>
-                    </ul>
+                        <h6 class="text-secondary mt-4">5. Student-Teacher Interaction</h6>
+                        <ul>
+                            <li><strong>Teacher Assignments:</strong> View assignments created by teachers.</li>
+                            <li><strong>Feedback Management:</strong> Allow two-way feedback.</li>
+                            <li><strong>Parent Communication:</strong> Engage with parents.</li>
+                        </ul>
 
-                    <!-- Dashboard Analytics Section -->
-                    <h6>6. Dashboard Analytics</h6>
-                    <ul>
-                        <li><strong>Total Students & Teachers:</strong> View real-time data on the number of students, teachers, and assignments.</li>
-                        <li><strong>Performance Metrics:</strong> Track student and teacher performance through dashboards and charts.</li>
-                        <li><strong>Upcoming Deadlines:</strong> Display upcoming assignment and exam deadlines.</li>
-                    </ul>
+                        <h6 class="text-secondary mt-4">6. Dashboard Analytics</h6>
+                        <ul>
+                            <li><strong>Total Students & Teachers:</strong> See real-time stats.</li>
+                            <li><strong>Performance Metrics:</strong> Monitor academic progress.</li>
+                            <li><strong>Upcoming Deadlines:</strong> View assignment/exam schedules.</li>
+                        </ul>
 
-                    <!-- User Roles & Permissions Section -->
-                    <h6>7. User Roles & Permissions</h6>
-                    <ul>
-                        <li><strong>Role Management:</strong> Assign roles like admin, teacher, or student and manage permissions.</li>
-                        <li><strong>Activity Logs:</strong> View logs of actions performed by users on the dashboard.</li>
-                    </ul>
+                        <h6 class="text-secondary mt-4">7. User Roles & Permissions</h6>
+                        <ul>
+                            <li><strong>Role Management:</strong> Assign Admin, Teacher, Student roles.</li>
+                            <li><strong>Activity Logs:</strong> See user action history.</li>
+                        </ul>
 
-                    <!-- Settings Section -->
-                    <h6>8. Settings</h6>
-                    <ul>
-                        <li><strong>School Year Management:</strong> Set the current academic year.</li>
-                        <li><strong>Email & Notification Settings:</strong> Configure notifications for events like new assignments or feedback.</li>
-                        <li><strong>Security Settings:</strong> Manage password policies and authentication settings.</li>
-                    </ul>
+                        <h6 class="text-secondary mt-4">8. Settings</h6>
+                        <ul>
+                            <li><strong>School Year Management:</strong> Set academic years easily.</li>
+                            <li><strong>Email & Notification Settings:</strong> Customize alerts.</li>
+                            <li><strong>Security Settings:</strong> Configure password and login rules.</li>
+                        </ul>
+                    </section>
                 </div>
             </div>
-        </div>
+        </main>
     </div>
 </div>
-
-<!-- Add Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
-{% endblock content %}
+{% endblock %}

@@ -40,8 +40,31 @@
             <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary ms-2">Cancel</a>
         </div>
     </form>
+
+    <!-- Back to Teacher List Button -->
+    <div class="text-center mt-4">
+        <a href="{% url 'teacher_list' %}" class="btn btn-secondary">Back to Teacher List</a>
+    </div>
 </div>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+{% block styles %}
+    <style>
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            .form-label {
+                font-size: 0.9rem;
+            }
+            .btn {
+                font-size: 0.85rem;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+{% endblock %}
 {% endblock %}

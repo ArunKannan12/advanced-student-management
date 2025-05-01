@@ -12,6 +12,8 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.signing import TimestampSigner, BadSignature, SignatureExpired
 from django.utils.timezone import now
 
+from django.contrib.auth.forms import PasswordChangeForm,SetPasswordForm
+from django.contrib.auth import update_session_auth_hash
 from .forms import SignupForm
 from .models import CustomUser, PasswordResetRequest
 from .utils import send_verification_email
@@ -19,6 +21,7 @@ from .utils import send_verification_email
 import logging
 
 logger = logging.getLogger('verification')
+logger = logging.getLogger(__name__)
 
 signer = TimestampSigner()
 
@@ -124,7 +127,7 @@ def signup_view(request):
 # Login View
 def login_view(request):
     if request.method == 'POST':
-        email = request.POST.get('email')
+        email = request.POST.get('email').lower()
         password = request.POST.get('password')
 
         user = authenticate(request, username=email, password=password)
@@ -171,36 +174,68 @@ def forgot_password_view(request):
             logger.warning(f"Password reset attempted for non-existent email: {email}")
             messages.error(request, 'No account found with that email address.')
 
-    return render(request, 'authentication/forgot-password.html')
+    return render(request, 'authentication/forgot_password.html')
 
 
 
 # Reset Password View
+@login_required
+def change_password_view(request):
+    if not request.user.is_authenticated:
+        messages.error(request,'You must be logged in to change your password')
+        return redirect('login')
+    if request.method == 'POST':
+        form = PasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()  # Save the new password
+            update_session_auth_hash(request, form.user)  # Keeps the user logged in after password change
+            messages.success(request, 'Your password has been updated successfully.')
+            
+            # Role-based redirection after password change
+            if request.user.role == 'admin':
+                return redirect('admin_dashboard')  # Redirect to admin dashboard
+            elif request.user.role == 'teacher':
+                return redirect('teacher_dashboard')  # Redirect to teacher dashboard
+            elif request.user.role == 'student':
+                return redirect('student_dashboard')  # Redirect to student dashboard
+            else:
+                return redirect('home')  # Fallback redirection if no valid role
+            
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(user=request.user)
+    
+    return render(request, 'authentication/change_password.html', {'form': form})
+
 def reset_password_view(request, token):
+    # Retrieve the reset request based on the token
     reset_request = PasswordResetRequest.objects.filter(token=token).first()
 
     if not reset_request or not reset_request.is_valid():
         messages.error(request, 'The reset link is invalid or has expired.')
         return redirect('forgot_password')
-
+    user = reset_request.user
     if request.method == 'POST':
-        new_password = request.POST.get('new_password')
-        confirm_password = request.POST.get('confirm_password')
+        form = SetPasswordForm(user,request.POST)
+        if form.is_valid():
+            form.save()
+           
+            messages.success(request, 'Your password has been updated successfully.')
+            reset_request.delete()
+            
+            # Role-based redirection
+            
+            return redirect('login')  # Fallback redirection
+            
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(user=request.user)
+    
+    return render(request, 'authentication/reset_password.html', {'form': form})
 
-        if new_password != confirm_password:
-            messages.error(request, 'Passwords do not match.')
-            return render(request, 'authentication/reset_password.html', {'token': token})
 
-        user = reset_request.user
-        user.set_password(new_password)
-        user.save()
-        reset_request.delete()  # Clear the used reset request
-
-        logger.info(f"Password successfully reset for {user.email}")
-        messages.success(request, 'Your password has been reset successfully. You can now log in.')
-        return redirect('login')
-
-    return render(request, 'authentication/reset_password.html', {'token': token})
 
 def logout_view(request):
     logout(request)

@@ -11,11 +11,11 @@
                 <div class="list-group-item d-flex justify-content-between align-items-center">
                     <div>
                         <strong><a href="{% url 'assignment_detail' assignment.id %}">{{ assignment.title }}</a></strong><br>
-                        <small>Due Date: {{ assignment.due_date }}</small>
+                        <small>Due Date: {{ assignment.due_date|date:"F j, Y" }}</small>
                     </div>
                     <div class="d-flex">
                         <a href="{% url 'update_assignment' assignment.id %}" class="btn btn-warning btn-sm mr-4">Edit</a>
-                        <a href="#" class="btn btn-danger btn-sm" onclick="confirmDelete(event, '{{ assignment.id }}')">Delete</a>
+                        <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-assignment-id="{{ assignment.id }}">Delete</button>
                     </div>
                 </div>
             {% endfor %}
@@ -24,15 +24,38 @@
         <p class="text-center">You haven't created any assignments yet.</p>
     {% endif %}
 </div>
+
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this assignment? This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form method="POST" id="deleteForm">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
-    function confirmDelete(event, assignmentId) {
-        event.preventDefault();  // Prevent the default link behavior
-        
-        // Ask for confirmation
-        if (confirm("Are you sure you want to delete this assignment?")) {
-            // If confirmed, redirect to the delete URL
-            window.location.href = `/teachers/assignments/${assignmentId}/delete/`;
-        }
-    }
+    var confirmDeleteModal = document.getElementById('confirmDeleteModal');
+    confirmDeleteModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget; // Button that triggered the modal
+        var assignmentId = button.getAttribute('data-assignment-id'); // Extract assignment ID
+        var deleteForm = confirmDeleteModal.querySelector('#deleteForm');
+
+        // Set the form action to delete the correct assignment
+        deleteForm.action = "{% url 'delete_assignment' 0 %}".replace('0', assignmentId);
+    });
 </script>
 {% endblock content %}

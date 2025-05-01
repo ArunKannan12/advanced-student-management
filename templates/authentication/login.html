@@ -3,26 +3,102 @@
 {% block title %}Login - Student Management{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <h2 class="text-center mb-4">Login</h2>
-        <form method="POST">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" class="form-control" required placeholder="Enter your email" value="{{ request.POST.email }}">
+<style>
+    .message-box {
+        padding: 12px 16px;
+        border-radius: 6px;
+        margin-bottom: 15px;
+        font-weight: 500;
+        transition: opacity 0.4s ease;
+    }
+    .message-success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+    .message-error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+    .fade-out {
+        opacity: 0;
+    }
+</style>
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+
+            <!-- Messages -->
+            {% if messages %}
+                <div id="messages">
+                    {% for message in messages %}
+                        <div class="message-box message-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <script>
+                    setTimeout(function () {
+                        const messages = document.querySelectorAll('.message-box');
+                        messages.forEach(msg => {
+                            msg.classList.add('fade-out');
+                            setTimeout(() => msg.remove(), 400);
+                        });
+                    }, 3000);
+                </script>
+            {% endif %}
+
+            <div class="card shadow-sm rounded-4">
+                <div class="card-body p-4">
+                    
+                    <h2 class="text-center mb-4 text-primary">Login</h2>
+
+                    <form method="POST" novalidate>
+                        {% csrf_token %}
+
+                        <!-- Email Input -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email" 
+                                class="form-control" 
+                                placeholder="Enter your email"
+                                value="{{ request.POST.email }}"
+                                required>
+                        </div>
+
+                        <!-- Password Input -->
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input 
+                                type="password" 
+                                id="password" 
+                                name="password" 
+                                class="form-control" 
+                                placeholder="Enter your password"
+                                required>
+                        </div>
+
+                        <!-- Login Button and Forgot Password Link -->
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                            <a href="{% url 'forgot_password' %}" class="btn btn-link">Forgot Password?</a>
+                        </div>
+
+                    </form>
+
+                    <!-- Sign Up Link -->
+                    <div class="text-center mt-4">
+                        <p class="mb-0">Don't have an account? <a href="{% url 'signup' %}">Sign up</a></p>
+                    </div>
+
+                </div>
             </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" class="form-control" required placeholder="Enter your password">
-            </div>
-            <div class="form-group d-flex justify-content-between align-items-center">
-                <button type="submit" class="btn btn-primary mt-3">Login</button>
-                <a href="{% url 'forgot_password' %}" class="btn btn-link mt-3">Forgot Password?</a>
-            </div>
-        </form>
-        <div class="text-center mt-4">
-            <p>Don't have an account? <a href="{% url 'signup' %}">Sign up</a></p>
+
         </div>
     </div>
 </div>

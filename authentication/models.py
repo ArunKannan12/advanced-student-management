@@ -74,7 +74,7 @@ class PasswordResetRequest(models.Model):
         return now() <= self.created_at + self.TOKEN_VALIDITY_PERIOD
 
     def send_reset_email(self):
-        reset_link = f"http://localhost:8000/auth/reset-password/{self.token}"
+        reset_link = f"http://localhost:8000/reset-password/{self.token}"
         subject = "Password Reset Request"
         message = f"Hi,\n\nClick the link below to reset your password:\n{reset_link}\n\nIf you did not request this, please ignore this email."
 

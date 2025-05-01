@@ -4,16 +4,21 @@
 <div class="container mt-5">
     <h1 class="text-center mb-4">{{ assignment.title }}</h1>
 
-    <p>{{ assignment.description }}</p>
-    <p><strong>Due Date:</strong> {{ assignment.due_date }}</p>
-    <p><strong>Assigned by:</strong> {{ assignment.teacher.user.first_name }} {{ assignment.teacher.user.last_name }}</p>
+    <!-- Assignment Details -->
+    <div class="mb-3">
+        <p><strong>Description:</strong> {{ assignment.description }}</p>
+        <p><strong>Due Date:</strong> {{ assignment.due_date|date:"F j, Y" }}</p>
+        <p><strong>Assigned by:</strong> {{ assignment.teacher.user.first_name }} {{ assignment.teacher.user.last_name }}</p>
+    </div>
 
     {% if student_assignment.is_completed %}
-        <p><strong>Status:</strong> Completed on {{ student_assignment.submitted_at }}</p>
+        <div class="alert alert-success">
+            <strong>Status:</strong> Completed on {{ student_assignment.submitted_at|date:"M d, Y H:i" }}
+        </div>
         <a href="{{ student_assignment.submitted_file.url }}" class="btn btn-success" target="_blank">View Submission</a>
-
     {% else %}
-        <form method="POST" enctype="multipart/form-data">
+        <!-- Assignment Submission Form -->
+        <form method="POST" enctype="multipart/form-data" class="mt-4">
             {% csrf_token %}
             <div class="mb-3">
                 <label for="submission_file" class="form-label">Submit your work:</label>

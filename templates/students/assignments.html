@@ -1,18 +1,24 @@
 {% extends "home/base.html" %}
+
 {% block content %}
+<div class="container my-5">
+    <h1 class="text-center mb-4">Your Assignments</h1>
 
-<h1>Your Assignments</h1>
-    <ul>
-        {% for assignment in assignments %}
-            <li>
-                <strong>{{ assignment.title }}</strong><br>
-                Description: {{ assignment.description }}<br>
-                Due Date: {{ assignment.due_date }}<br>
-                Assigned by: {{ assignment.teacher.user.get_full_name }}
-            </li>
-        {% empty %}
-            <li>You don't have any assignments yet.</li>
-        {% endfor %}
-    </ul>
-
+    {% if assignments %}
+        <div class="list-group">
+            {% for assignment in assignments %}
+                <a href="{% url 'assignment_detail' assignment.id %}" class="list-group-item list-group-item-action">
+                    <h5 class="mb-1">{{ assignment.title }}</h5>
+                    <p class="mb-1">{{ assignment.description }}</p>
+                    <small>Due Date: {{ assignment.due_date }}</small><br>
+                    <small>Assigned by: {{ assignment.teacher.user.get_full_name }}</small>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            <p>You don't have any assignments yet.</p>
+        </div>
+    {% endif %}
+</div>
 {% endblock content %}
